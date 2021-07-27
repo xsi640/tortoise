@@ -1,5 +1,7 @@
 package com.github.xsi640.controller
 
+import com.github.xsi640.entities.Journal
+import com.github.xsi640.repository.JournalRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.web.bind.annotation.*
@@ -24,25 +26,4 @@ class JournalController {
     }
 }
 
-@Entity
-@Table(name = "journal")
-class Journal(
-    @Id
-    @SequenceGenerator(name = "journal_id_seq", sequenceName = "journal_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "journal_id_seq")
-    @Column(name = "id")
-    var id: Int = 0,
-    @Column
-    var message: String = "",
-    @Column
-    var type: JournalType = JournalType.FEED,
-    @Column(name = "created_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    var createdDate: Date = Date()
-)
 
-interface JournalRepository : JpaRepository<Journal, Long>
-
-enum class JournalType(val code: Int) {
-    FEED(1), Filter(2)
-}

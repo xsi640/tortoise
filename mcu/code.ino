@@ -21,7 +21,7 @@
 #define WATER_PIN 15  //水泵PIN D8
 #define HOT_PIN 3     //加热棒PIN  D9
 
-#define URL "http://record.suyang.home/api/v1/journal"
+#define URL "http://192.168.1.254:18080/api/v1/journal"
 
 const unsigned int FEED_COUNT = 2;  //每次喂食次数
 const unsigned int FEED_HOUR = 7;   //喂食的小时
@@ -49,16 +49,16 @@ void setup() {
   setupClock();
   setupWiFi();
   setupNtp();
-  pinMode(WATER_PIN, OUTPUT);
-  pinMode(HOT_PIN, OUTPUT);
+//  pinMode(WATER_PIN, OUTPUT);
+//  pinMode(HOT_PIN, OUTPUT);
   Serial.println("end init...");
 }
 
 void loop() {
   if (WiFi.status() == WL_CONNECTED) {
-    digitalWrite(WATER_PIN, HIGH);
-    digitalWrite(HOT_PIN, HIGH);
-
+//    digitalWrite(WATER_PIN, HIGH);
+//    digitalWrite(HOT_PIN, HIGH);
+//    doFeed();
     fixTime();
     feed();
     updateTime();
@@ -67,7 +67,7 @@ void loop() {
 }
 
 void setupStepper() {
-  myStepper.setSpeed(15);//速度15rpm
+  myStepper.setSpeed(5);//速度15rpm
 }
 
 void setupClock() {
