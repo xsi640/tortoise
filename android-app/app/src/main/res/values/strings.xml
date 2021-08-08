@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Tortoise</string>
+    <string name="feed">喂食</string>
+    <string name="feedNumber">喂食数量：</string>
+</resources>
