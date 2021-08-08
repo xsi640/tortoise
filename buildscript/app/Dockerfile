@@ -3,5 +3,5 @@ VOLUME /tmp
 ENV LANG C.UTF-8
 ADD app.jar /app.jar
 ADD launch.sh /launch.sh
-EXPOSE 9000
+EXPOSE 18080
 ENTRYPOINT ["sh", "/launch.sh"]
