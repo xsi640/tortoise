@@ -32,7 +32,8 @@ allprojects {
         "commons_io" to "2.8.0",
         "commons_codec" to "1.15",
         "commons_lang" to "3.12.0",
-        "jackson" to "2.11.3"
+        "jackson" to "2.11.3",
+        "queryDSL" to "4.4.0",
     )
 
     rootProject.extra.set("vers", vers)
@@ -80,8 +81,8 @@ allprojects {
                 password = pwd
                 isAllowInsecureProtocol = true
             }
-//            url = uri("http://172.16.11.231:8081/nexus/repository/maven2-group/")
-            url = uri("http://192.168.1.254:8081/repository/maven-group/")
+            url = uri("http://172.16.11.231:8081/nexus/repository/maven2-group/")
+//            url = uri("http://192.168.1.254:8081/repository/maven-group/")
         }
     }
 

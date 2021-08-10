@@ -1,5 +1,6 @@
 package com.github.xsi640.entities
 
+import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 import javax.persistence.*
 
@@ -10,7 +11,7 @@ class Journal(
     @SequenceGenerator(name = "journal_id_seq", sequenceName = "journal_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "journal_id_seq")
     @Column(name = "id")
-    var id: Int = 0,
+    var id: Long = 0,
     @Column
     var message: String = "",
     @Column
@@ -44,5 +45,6 @@ class JournalTypeConverter : AttributeConverter<JournalType, Int> {
     override fun convertToEntityAttribute(code: Int): JournalType {
         return JournalType.codeOf(code)
     }
-
 }
+
+interface JournalRepository : JpaRepository<Journal, Long>
