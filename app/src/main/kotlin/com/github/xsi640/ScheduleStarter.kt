@@ -10,6 +10,7 @@ import org.springframework.scheduling.TaskScheduler
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.scheduling.support.CronTrigger
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import java.util.concurrent.ScheduledFuture
 
 @Component
@@ -23,7 +24,7 @@ class ScheduleStarter : CommandLineRunner {
     @Autowired
     private lateinit var settingsRepository: SettingsRepository
 
-    private lateinit var feedTask: ScheduledFuture<*>
+    private var feedTask: ScheduledFuture<*>? = null
 
     @Autowired
     lateinit var mq: TortoiseMq
@@ -38,12 +39,13 @@ class ScheduleStarter : CommandLineRunner {
     }
 
     fun reloadFeedTask() {
-        val feedCountSettings = settingsRepository.findByKey(SettingsKeys.FEED_COUNT.name)
-            ?: throw IllegalArgumentException("The settings ${SettingsKeys.FEED_COUNT.name} not found.")
-        val feedCronSettings = settingsRepository.findByKey(SettingsKeys.FEED_COUNT.name)
-            ?: throw IllegalArgumentException("The settings ${SettingsKeys.FEED_CRON.name} not found.")
+        val feedCountSettings = settingsRepository.findByKey(SettingsKeys.FEED_COUNT.name) ?: return
+        val feedCronSettings = settingsRepository.findByKey(SettingsKeys.FEED_CRON.name) ?: return
         val feedCount = feedCountSettings.value.toInt()
         val cron = feedCronSettings.value
+        if (feedTask != null) {
+            feedTask!!.cancel(true)
+        }
         feedTask = taskScheduler.schedule({
             mq.feed(feedCount)
         }, CronTrigger(cron))!!
