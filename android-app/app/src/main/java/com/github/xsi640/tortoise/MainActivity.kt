@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.Message
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.Toast
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -25,6 +27,34 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.mnuOpen -> {
+                val menuItemView = findViewById<View>(R.id.mnuOpen)
+                showSettingsMenu(menuItemView)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showSettingsMenu(view: View) {
+        val popup = PopupMenu(this, view)
+        popup.menuInflater.inflate(R.menu.main, popup.menu)
+        popup.setOnMenuItemClickListener {
+            false
+        }
+        popup.setOnDismissListener {
+            Toast.makeText(this, "close", Toast.LENGTH_SHORT).show()
+        }
+        popup.show()
+    }
+
     private val handler = Handler(Looper.getMainLooper()) { msg ->
         when (msg.what) {
             1 -> {
@@ -37,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     fun initView() {
         this.btnFeed = findViewById(R.id.btnFeed)
         this.btnFeed.setOnClickListener { btnFeedClicked(it) }
+
     }
 
     private fun btnFeedClicked(view: View) {
