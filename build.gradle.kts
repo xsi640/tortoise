@@ -2,11 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-    id("org.springframework.boot") version "2.4.6"
+    id("org.springframework.boot") version "2.4.9"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.5.0"
-    kotlin("plugin.spring") version "1.5.0"
-    kotlin("plugin.jpa") version "1.5.0"
+    kotlin("jvm") version "1.5.21"
+    kotlin("plugin.spring") version "1.5.21"
+    kotlin("plugin.jpa") version "1.5.21"
+    kotlin("kapt") version "1.5.21" apply false
 }
 
 allprojects {
@@ -81,8 +82,8 @@ allprojects {
                 password = pwd
                 isAllowInsecureProtocol = true
             }
-//            url = uri("http://172.16.11.231:8081/nexus/repository/maven2-group/")
-            url = uri("http://192.168.1.254:8081/repository/maven-group/")
+            url = uri("http://172.16.11.231:8081/nexus/repository/maven2-group/")
+//            url = uri("http://192.168.1.254:8081/repository/maven-group/")
         }
     }
 
